@@ -1,5 +1,10 @@
 # UbanLogin
 
-uban登录项目通用逻辑提取
+uban邮件发送项目提取
 
-本项目依赖于thinkphp6.0 使用时请自行创建配置文件 uban_user.php
+本项目依赖于thinkphp6.0
+
+使用说明
+
+> composer require phpmailer/phpmailer dev-master
+> composer require uban/mail dev-master
