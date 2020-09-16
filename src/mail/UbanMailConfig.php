@@ -5,12 +5,12 @@ namespace uban\mail;
 class UbanMailConfig
 {
 
-    private $host = 'smtp.exmail.qq.com'; //smtp服务器
-    private $from = 'noreplay@global-sci.org'; //发送者的邮件地址
-    private $fromName = '期刊管理'; //发送邮件的用户昵称
-    private $username = 'noreplay@global-sci.org'; //登录到邮箱的用户名
-    private $password = '5985SOCj!s'; //第三方登录的授权码，在邮箱里面设置
-    private $port = 465;
+    public $host = 'smtp.exmail.qq.com'; //smtp服务器
+    public $from = 'noreplay@global-sci.org'; //发送者的邮件地址
+    public $fromName = '期刊管理'; //发送邮件的用户昵称
+    public $username = 'noreplay@global-sci.org'; //登录到邮箱的用户名
+    public $password = '5985SOCj!s'; //第三方登录的授权码，在邮箱里面设置
+    public $port = 465;
 
     public function setConfig($host, $from, $fromName, $password, $port, $userName)
     {
