@@ -24,7 +24,7 @@ class Base
         if (empty($mailConfig)) {
             $mailConfig = Config::get('uban_mail');
             if (empty($mailConfig)) {
-                throw new Exception('Uban Mail Config uban_user.php not define');
+                throw new Exception('Uban Mail Config uban_mail.php not define');
             }
             $this->mailConfig = new \uban\base\Config();
             foreach ($mailConfig as $key => $item) {
