@@ -24,7 +24,9 @@ class Base
     {
         $mailConfig = Session::get('uban_mail_config');
         if (empty($mailConfig)) {
-            if (App::version() > 6) {
+            $version = App::version();
+            $bigVersion = substr($version, 0, 1);
+            if ($bigVersion == 6) {
                 $mailConfig = Config::get('uban_mail');
             } else {
                 $mailConfig = Config::get('uban_mail.');
