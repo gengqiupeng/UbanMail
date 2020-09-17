@@ -3,6 +3,7 @@
 namespace uban\mail;
 
 use think\Exception;
+use think\facade\App;
 use think\facade\Config;
 use think\facade\Session;
 
@@ -23,7 +24,11 @@ class Base
     {
         $mailConfig = Session::get('uban_mail_config');
         if (empty($mailConfig)) {
-            $mailConfig = Config::get('uban_mail.');
+            if (App::version() > 6) {
+                $mailConfig = Config::get('uban_mail');
+            } else {
+                $mailConfig = Config::get('uban_mail.');
+            }
             if (empty($mailConfig)) {
                 throw new Exception('Uban Mail Config uban_mail.php not define');
             }
