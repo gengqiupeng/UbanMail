@@ -20,63 +20,6 @@ class UbanMail
         return self::SendEmail($ubanConfig, $title, $message, $address);
     }
 
-    public static function SendMailByUserAndType($userId, $email, $type, $address)
-    {
-        $configService = (new UbanMailUserConfig());
-        $config = $configService->getConfigById($userId);
-        $colConf = $configService->getMailConfig();
-        //获取发信人配置，没有的话使用默认配置
-        if (empty($colConf)) {
-            $host = $config[$colConf->hostColumn];
-            $fromName = $config[$colConf->fromNameColumn];
-            $password = $config[$colConf->passwordColumn];
-            $port = $config[$colConf->port];
-        } else {
-            $host = $colConf->host;
-            $fromName = $colConf->fromName;
-            $password = $colConf->password;
-            $port = $colConf->port;
-        }
-        $ubanConfig = new UbanMailConfig();
-
-        $ubanConfig->setConfig($host,
-            $email,
-            $fromName,
-            $password,
-            $port,
-            $email);
-        //获取发送模板
-        $tplService = new UbanMailTemplate();
-        $tpl = $tplService->getTplByUserAndType($userId, $type);
-        //TODO 变量替换
-        $message = $tpl[$colConf->tplContentColumn];
-        return self::sendMail($ubanConfig, $tpl[$colConf->tplTitleColumn], $message, $address);
-    }
-
-    public static function SendMailByType($type, $address)
-    {
-        $configService = (new UbanMailUserConfig());
-        $colConf = $configService->getMailConfig();
-        $host = $colConf->host;
-        $fromName = $colConf->fromName;
-        $password = $colConf->password;
-        $port = $colConf->port;
-
-        $ubanConfig = new UbanMailConfig();
-        $ubanConfig->setConfig($host,
-            $colConf->mailUser,
-            $fromName,
-            $password,
-            $port,
-            $colConf->mailUser);
-        //获取发送模板
-        $tplService = new UbanMailTemplate();
-        $tpl = $tplService->getTplByUserAndType(0, $type);
-        //TODO 变量替换
-        $message = $tpl[$colConf->tplContentColumn];
-        return self::sendMail($ubanConfig, $tpl[$colConf->tplTitleColumn], $message, $address);
-    }
-
     /**
      *
      * @param $config UbanMailConfig
