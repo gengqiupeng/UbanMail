@@ -7,6 +7,7 @@ namespace uban\mail;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use think\Db;
+use think\facade\Cache;
 
 class UbanMail
 {
@@ -60,5 +61,19 @@ class UbanMail
         } else {
             return $mail->ErrorInfo;
         }
+    }
+
+    public static function backSendByRedis($path, $config, $title, $html, $emailAddress)
+    {
+        $redis_id = "ubanMail_$emailAddress" . time();
+        $data['config'] = $config;
+        $data['title'] = $title;
+        $data['html'] = $html;
+        $data['emailAddress'] = $emailAddress;
+        $data = serialize($data);
+        $redis = Cache::store('redis')->handler();
+        $redis->set($redis_id, $data);
+        $command = "nohup sh " . $path . "sendMail.sh $path"."think $redis_id > log.log 2>&1 &";
+        exec($command);
     }
 }
