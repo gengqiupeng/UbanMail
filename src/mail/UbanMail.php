@@ -75,5 +75,6 @@ class UbanMail
         $redis->set($redis_id, $data);
         $command = "nohup sh " . $path . "sendMail.sh $path"."think $redis_id > log.log 2>&1 &";
         exec($command);
+        return $redis_id;
     }
 }
