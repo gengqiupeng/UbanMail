@@ -18,7 +18,7 @@ class UbanMail
         $ubanConfig->setConfig($userConfig['host'], $user->getEmail(), $userConfig['from_name'],
             $userConfig['password'], $userConfig['port'], $user->getEmail());
 
-        return self::SendEmail($ubanConfig, $title, $message, $address);
+        return self::sendMail($ubanConfig, $title, $message, $address);
     }
 
     /**
@@ -50,10 +50,10 @@ class UbanMail
         $mail->MsgHTML($html);    //发送的邮件内容主体
         if (is_array($emailAddress)) {
             foreach ($emailAddress as $address) {
-                $mail->AddBCC($address);
+                $mail->addAddress($address);
             }
         } else {
-            $mail->AddBCC($emailAddress);    //收人的邮件地址
+            $mail->addAddress($emailAddress);    //收人的邮件地址
         }
         $result = $mail->Send();
         if ($result) {
@@ -63,9 +63,8 @@ class UbanMail
         }
     }
 
-    public static function backSendByRedis($path, $config, $title, $html, $emailAddress)
+    public static function backSendByRedis($path, $config, $title, $html, $emailAddress,$redis_id)
     {
-        $redis_id = "ubanMail_$emailAddress" . time();
         $data['config'] = $config;
         $data['title'] = $title;
         $data['html'] = $html;
@@ -73,8 +72,7 @@ class UbanMail
         $data = serialize($data);
         $redis = Cache::store('redis')->handler();
         $redis->set($redis_id, $data);
-        $command = "nohup sh " . $path . "sendMail.sh $path"."think $redis_id > log.log 2>&1 &";
+        $command = "nohup sh " . $path . "sendMail.sh $path" . "think $redis_id > log.log 2>&1 &";
         exec($command);
-        return $redis_id;
     }
 }
