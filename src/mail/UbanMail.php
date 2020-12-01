@@ -47,6 +47,13 @@ class UbanMail
         $mail->IsHTML(true);            //发送的内容使用html编写
         $mail->CharSet = 'utf-8';        //设置发送内容的编码
         $mail->Subject = $title;//设置邮件的标题
+        $mail->SMTPOptions=[
+            'ssl'=>[
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            ]
+        ];
         $mail->MsgHTML($html);    //发送的邮件内容主体
         if (is_array($emailAddress)) {
             foreach ($emailAddress as $address) {
