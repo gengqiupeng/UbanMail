@@ -46,7 +46,7 @@ class UbanMail
         //编辑发送的邮件内容
         $mail->IsHTML(true);            //发送的内容使用html编写
         $mail->CharSet = 'utf8';        //设置发送内容的编码
-        $mail->Subject = $title;//设置邮件的标题
+        $mail->Subject =  "=?UTF-8?B?".base64_encode($title)."?=";//设置邮件的标题
         $mail->SMTPOptions=[
             'ssl'=>[
                 'verify_peer' => false,
