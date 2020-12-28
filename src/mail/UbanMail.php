@@ -45,7 +45,7 @@ class UbanMail
         $mail->Password = $config->getPassword();        //第三方登录的授权码，在邮箱里面设置
         //编辑发送的邮件内容
         $mail->IsHTML(true);            //发送的内容使用html编写
-        $mail->CharSet = 'utf8';        //设置发送内容的编码
+        $mail->CharSet = 'utf-8';        //设置发送内容的编码
         $mail->Subject =  "=?UTF-8?B?".base64_encode($title)."?=";//设置邮件的标题
         $mail->SMTPOptions=[
             'ssl'=>[
