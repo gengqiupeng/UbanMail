@@ -78,7 +78,7 @@ class UbanMail
         $data['emailAddress'] = $emailAddress;
         $data = serialize($data);
         $redis = Cache::store('redis')->handler();
-        $redis->set($redis_id, $data);
+        $redis->set($redis_id, $data,10*3600);
         $command = "nohup sh " . $path . "sendMail.sh $path" . "think $redis_id > log.log 2>&1 &";
         exec($command);
     }

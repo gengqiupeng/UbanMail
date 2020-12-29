@@ -18,4 +18,5 @@ uban邮件发送项目提取
 2：修改config/console.php 添加命令   
 3：复制sendMail.sh 到项目根目录   
 4：调用```UbanMail::backSendByRedis()```
-> 暂时仅支持redis方式传递邮件信息
+> 暂时仅支持redis方式传递邮件信息   
+> redis 有效期为10小时，后续考虑修改为获取项目配置
